@@ -6,24 +6,29 @@
 class MonteCarlo {
 public:
   MonteCarlo();
-  MonteCarlo(float* historicalData, int daysToGenerate);
+  MonteCarlo(float* historicalData, int lengthOfHD, int daysToGenerate);
   float* getResults();
 private:
   // User Inputted Variables
   float* historical_price_data; // The historical price data
+  int sizeOfHPD; // Array length of historical price data
   int total_days;
   // Runtime Variables
   float* results; // The results of your calculations
-  float* random_numbers;
-  float* periodic_daily_return; // periodic daily return = ln (day's price ÷ previous day's price)
+  float* periodic_daily_return;
+  int sizeOfPDR; // Array length of PDR
   float drift;
   float std_dev; // Standard deviation
+  float average_daily_return; // Average across whoel series
+  float variance;
   //Functions
-  float calculateDrift(float avgDailyReturn, float variance); //drift = average daily return - (variance ÷ 2)
-  float calculateAverage();
-  float calculateVariance();
-  float calculateStandardDeviation();
-  float calculateNextDayPrice();
+  void calculatePeriodicDailyReturn(); // periodic daily return = ln (day's price ÷ previous day's price)
+  void calculateDrift(); //drift = average daily return - (variance ÷ 2)
+  void calculateAverage();
+  void calculateVariance();
+  void calculateStandardDeviation();
+  void calculateFuturePricing();
+  f
 
 
 };
