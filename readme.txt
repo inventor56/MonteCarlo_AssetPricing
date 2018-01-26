@@ -19,6 +19,7 @@
 	- CIDA - NVIDIA Parallel Processing
 - References
 	- https://www.investopedia.com/terms/e/efficientmarkethypothesis.asp
+	- https://www.investopedia.com/terms/m/montecarlosimulation.asp
 		- Holds the Monte Carlo formula, implemented in this programs
 	- M. Matsumoto and T. Nishimura, "Mersenne Twister: A 623-dimensionally equidistributed uniform pseudorandom number generator",
 		ACM Trans. on Modeling and Computer Simulation Vol. 8, No. 1, January pp. 3-30 (1998)
