@@ -8,7 +8,7 @@
 class MonteCarlo {
 public:
   MonteCarlo();
-  MonteCarlo(float* historicalData, int lengthOfHD, int daysToGenerate, float seed_val);
+  MonteCarlo(float* historicalData, int lengthOfHD, int daysToGenerate, unsigned int seed_val);
   float* getResults();
 private:
   // User Inputted Variables
@@ -23,7 +23,7 @@ private:
   float std_dev; // Standard deviation
   float average_daily_return; // Average across whoel series
   float variance;
-  float seed;
+  unsigned int seed;
   //Functions
   void calculatePeriodicDailyReturn(); // periodic daily return = ln (day's price ÷ previous day's price)
   void calculateDrift(); //drift = average daily return - (variance ÷ 2)

@@ -2,6 +2,7 @@
 #include "MonteCarlo.h"
 #include <cmath>
 #include <random>
+#include <iostream>
 
 
   MonteCarlo::MonteCarlo() { //default constructor
@@ -9,12 +10,13 @@
     results = new float[total_days];
     //historicalData get elsewhere
   }
-  MonteCarlo::MonteCarlo(float* historicalData, int lengthOfHD, int daysToGenerate, float seed_val) {
+  MonteCarlo::MonteCarlo(float* historicalData, int lengthOfHD, int daysToGenerate, unsigned int seed_val) {
     historical_price_data = historicalData;
     total_days = daysToGenerate;
     sizeOfHPD = lengthOfHD;
     results = new float[total_days];
     seed = seed_val;
+    std::cout << seed_val << std::endl;
   }
 
   void MonteCarlo::calculatePeriodicDailyReturn() {

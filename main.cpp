@@ -9,8 +9,8 @@ int main() {
   int num_of_simulations;
   int days_to_generate = 10;
   // Parse input from file
-
   int hist_length = 8;
+	  
   float* results;
   float* hist_arr = new float[hist_length];
   hist_arr[0] = 78.237083;
