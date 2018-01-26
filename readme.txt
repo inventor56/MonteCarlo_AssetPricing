@@ -9,14 +9,14 @@
 	- Herbie Goes to Monte Carlo
 
 - NOTES
-	- You may experience some higher performance than normal on initial runs
-		- i.e. efficiency may exceed 1, speedup may exeed number of cores
-	- This seems to be fixed be rerunning the program and trying the same values again
+	- You can get data from https://finance.yahoo.com/
+		- I.E. https://finance.yahoo.com/quote/ge/history/
+		- Click on "Download Data" above the Volume
 
 
 - Tools Used
-	- CLion IDE by JetBrains
 	- Ubuntu - Linux Distribution
+	- CIDA - NVIDIA Parallel Processing
 - References
 	- https://www.investopedia.com/terms/e/efficientmarkethypothesis.asp
 		- Holds the Monte Carlo formula, implemented in this programs

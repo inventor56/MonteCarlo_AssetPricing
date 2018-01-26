@@ -16,9 +16,6 @@
     results = new float[total_days];
     seed = seed_val;
   }
-  float* MonteCarlo::getResults() {
-    return results;
-  }
 
   void MonteCarlo::calculatePeriodicDailyReturn() {
     sizeOfPDR = sizeOfHPD-1;
@@ -26,6 +23,16 @@
     for(int i = 1; i < sizeOfHPD; i++) {
       periodic_daily_return[i] = log(historical_price_data[i] / historical_price_data[i-1]);
     }
+  }
+
+  float* MonteCarlo::getResults() {
+    calculatePeriodicDailyReturn();
+    calculateAverage();
+    calculateVariance();
+    calculateStandardDeviation();
+    calculateFuturePricing();
+
+    return results;
   }
 
   void MonteCarlo::calculateDrift(){
@@ -56,17 +63,14 @@
   void MonteCarlo::calculateStandardDeviation() {
     std_dev = sqrt(variance);
   }
-  float MonteCarlo::getRandomNumber() {
-    std::default_random_engine generator (seed); // create generator with seed
-    std::normal_distribution<float> dist (0.0,1.0);
-    return std_dev*dist(generator); // The generated random number
-  }
 
   void MonteCarlo::calculateFuturePricing() {
-    float randomVal = getRandomNumber();
+    std::default_random_engine generator(seed); // create generator with seed
+    std::normal_distribution<float> dist (0.0,1.0);
+
     float currentPrice = historical_price_data[sizeOfHPD-1]; // Get last value in price data to start with.
     for (int i = 0; i < total_days; i++) {
-      results[i] = currentPrice*(exp(drift+randomVal));
+      results[i] = currentPrice*(exp(drift+std_dev*dist(generator)));
       currentPrice = results[i];
     }
   }

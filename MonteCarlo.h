@@ -2,6 +2,8 @@
 #ifndef MONTE_CARLO_H
 #define MONTE_CARLO_H
 
+#include <random>
+
 // Think about what we want this class to do....
 class MonteCarlo {
 public:
@@ -29,7 +31,6 @@ private:
   void calculateVariance();
   void calculateStandardDeviation();
   void calculateFuturePricing();
-  float getRandomNumber();
 };
 
 #endif
