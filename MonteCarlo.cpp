@@ -1,18 +1,20 @@
 
 #include "MonteCarlo.h"
 #include <cmath>
+#include <random>
 
 
   MonteCarlo::MonteCarlo() { //default constructor
     total_days = 10;
-    results = new float[daysToGenerate];
+    results = new float[total_days];
     //historicalData get elsewhere
   }
-  MonteCarlo::MonteCarlo(float* historicalData, int lengthOfHD, int daysToGenerate) {
+  MonteCarlo::MonteCarlo(float* historicalData, int lengthOfHD, int daysToGenerate, float seed_val) {
     historical_price_data = historicalData;
     total_days = daysToGenerate;
     sizeOfHPD = lengthOfHD;
-    results = new float[daysToGenerate];
+    results = new float[total_days];
+    seed = seed_val;
   }
   float* MonteCarlo::getResults() {
     return results;
@@ -54,6 +56,17 @@
   void MonteCarlo::calculateStandardDeviation() {
     std_dev = sqrt(variance);
   }
+  float MonteCarlo::getRandomNumber() {
+    std::default_random_engine generator (seed); // create generator with seed
+    std::normal_distribution<float> dist (0.0,1.0);
+    return std_dev*dist(generator); // The generated random number
+  }
+
   void MonteCarlo::calculateFuturePricing() {
-    int rn = rand();
+    float randomVal = getRandomNumber();
+    float currentPrice = historical_price_data[sizeOfHPD-1]; // Get last value in price data to start with.
+    for (int i = 0; i < total_days; i++) {
+      results[i] = currentPrice*(exp(drift+randomVal));
+      currentPrice = results[i];
+    }
   }

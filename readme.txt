@@ -1,6 +1,7 @@
 - To run executable in Linux terminal, navigate to the Executable directory and type ./MersenneTwister
-- To compile from the source code, be sure to compile with C++11 and Cuda
-	- nvcc -std=c++11 main.cpp mst.cpp rng_grid.cpp kernel_cuda.cu -o MersenneTwister.c
+- To compile from the source code, be sure to compile with C++11 and CUDA
+	- nvcc main.cpp MonteCarlo.cpp -std=c++11
+	- Using C+11 support for NVCC as of CUDA version 7.0
 
 
 
