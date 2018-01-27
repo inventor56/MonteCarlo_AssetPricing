@@ -7,30 +7,42 @@ using namespace std;
 
 int main() {
   int num_of_simulations;
+  int hist_length = 0;
   int days_to_generate = 10;
+  float * hist_array;
+  float * results;
   // Parse input from file
-  int hist_length = 8;
-	  
-  float* results;
-  float* hist_arr = new float[hist_length];
-  hist_arr[0] = 78.237083;
-  hist_arr[1] = 78.36644;
-  hist_arr[2] = 83.391197;
-  hist_arr[3] = 83.470802;
-  hist_arr[4] = 82.764351;
-  hist_arr[5] = 82.764351;
-  hist_arr[6] = 83.630005;
-  hist_arr[7] = 83.719551;
-
-  MonteCarlo testing = MonteCarlo(hist_arr, hist_length, days_to_generate, time(nullptr));
+  
+  vector<float> temp_storage;
+  string val, trash;
+  ifstream csvFile("DataSets/MSthreeMonth.csv");
+  getline(csvFile, trash); // Skip first line
+  while (true) {
+  	for (int b = 0; b < 5; b++) {// Set up specifically for Yahoo Finance data (as of the current version)
+  		getline(csvFile, trash, ',');
+  		//cout << "These should be erased: " << val << endl;
+  	}
+  	if (csvFile.eof())
+  		break;
+  	getline(csvFile, val, ',');
+  	cout << "This is the val: " << val << endl;
+  	temp_storage.push_back(stof(val));
+  	hist_length++; // Increment total amount of historical data
+  }
+  cout << "We have " << hist_length << "numbers" << endl;
+  csvFile.close();
+  
+  // Convert vector to array (for now)
+  hist_array = new float[hist_length];
+  copy(temp_storage.begin(), temp_storage.end(), hist_array);
+  
+  MonteCarlo testing = MonteCarlo(hist_array, hist_length, days_to_generate, time(nullptr));
   results = testing.getResults();
+
 
   for (int i = 0; i < days_to_generate; i++) {
     cout << results[i] << " : ";
   }
-
-
-
 
 
   // Run Serial Version
