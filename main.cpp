@@ -9,11 +9,11 @@ int main() {
   int num_of_simulations;
   int hist_length = 0;
   int days_to_generate = 10;
-  float * hist_array;
-  float * results;
+  double * hist_array;
+  double * results;
   // Parse input from file
   
-  vector<float> temp_storage;
+  vector<double> temp_storage;
   string val, trash;
   ifstream csvFile("DataSets/MSthreeMonth.csv");
   getline(csvFile, trash); // Skip first line
@@ -33,7 +33,7 @@ int main() {
   csvFile.close();
   
   // Convert vector to array (for now)
-  hist_array = new float[hist_length];
+  hist_array = new double[hist_length];
   copy(temp_storage.begin(), temp_storage.end(), hist_array);
   
   MonteCarlo testing = MonteCarlo(hist_array, hist_length, days_to_generate, time(nullptr));
