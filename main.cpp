@@ -3,6 +3,7 @@
 #include <iostream>
 #include <fstream>
 #include "kernel_cuda.h"
+#include <chrono>
 
 using namespace std;
 
@@ -54,6 +55,12 @@ int main() {
   cin >> num_of_simulations;
   input_verifier();
 
+  //Quick Checks
+  if (num_of_simulations > 10000) {  // If simulation size greater than what CUDA can handle
+    cout << "We're sorry, but that number of simulations is too large for CUDA to handle!" << endl;
+    exit(1);
+  }
+
   ifstream csvFile(fileInput);
   getline(csvFile, trash); // Skip first line
   while (true) {
@@ -80,6 +87,8 @@ int main() {
 
   // Here, we need to set up way to store data for multiple simulations
   if (run_type == 1) {
+    auto begin_time = std::chrono::high_resolution_clock::now(); // For keeping track of when the chrono clock begins
+
     results = new double*[num_of_simulations];
     for (int r = 0; r < num_of_simulations; r++) {
       results[r] = new double[days_to_generate];
@@ -96,23 +105,27 @@ int main() {
         results[k][aa] = obj->getResultAt(aa);
       }
     }
-
-
-    /*
-    for (int i = 0; i < num_of_simulations; i++) {
-      cout << "Simulation " << i << ":";
-      for (int c = 0; c < days_to_generate; c++) {
-        cout << "day "<< c << ": "<< results[i][c] << " . ";
-      }
-      cout << endl;
-    } */
+    auto end_time = std::chrono::high_resolution_clock::now(); // For keeping track of when the chrono clock ends
+    std::chrono::duration<double, std::milli> duration = end_time - begin_time;
+    double duration_serial = duration.count();
+    cout << "Serially computing " << num_of_simulations << " simulations, with results stretching out "
+      << days_to_generate << " days took " << duration_serial << " ms." << endl;
   }
   ////////////////////////////////////////////
   // Parallelized Version (CUDA Technology)
   ////////////////////////////////////////////
 
   else if (run_type == 2){
+    auto begin_time = std::chrono::high_resolution_clock::now(); // For keeping track of when the chrono clock begins
+
     results = cuda_run(hist_array, hist_length, days_to_generate, num_of_simulations);
+
+    auto end_time = std::chrono::high_resolution_clock::now(); // For keeping track of when the chrono clock ends
+    std::chrono::duration<double, std::milli> duration = end_time - begin_time;
+    double duration_cuda = duration.count();
+    cout << "Parallely computing " << num_of_simulations << " simulations, with results stretching out "
+      << days_to_generate << " days took " << duration_cuda << " ms." << endl;
+
   }
 
 
