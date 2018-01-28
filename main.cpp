@@ -26,7 +26,7 @@ int main() {
   string fileInput;
   vector<double> temp_storage;
   string val, trash;
-  int run_type = 2;
+  int run_type = 1;
 
 
   // Welcome and days to generate

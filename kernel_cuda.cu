@@ -10,11 +10,17 @@ __global__ void kernel(double drift, double init_price, int days, float* normals
   int index = blockIdx.x*gridDim.x;
   double currentPrice = init_price; // Get last value in price data to start with.
   for (int i = 0; i < days; i++) {
+    /*
     result[index+i] = currentPrice*(exp(drift+normals[index+i]));
     currentPrice = result[index+i];
-    //printf("Ok at Index %d, we have %f", index, currentPrice);
+    */
+    result[index+i] = currentPrice+1;
+    currentPrice = result[index+i];
+    printf("Ok, our normals are at: %f \n", normals[index+i]);
+    //printf("Ok at Index %d, we have %f \n", index+i, currentPrice);
   }
   //printf("The block id is %d \n", blockIdx.x);
+  //printf("Ok at Index %d", index);
   //printf("the grid dimesnions are %d \n", gridDim.x);
   //result[3] = init_price*(exp(drift+normals[4]));
 }
