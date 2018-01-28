@@ -50,11 +50,14 @@ int main() {
 
   for (int k = 0; k < num_of_simulations; k++) {
     // Creatre monte carlo with time + k as a seed_val
-    MonteCarlo obj = MonteCarlo(hist_array, hist_length, days_to_generate, time(nullptr)+k);
+    MonteCarlo* obj = new MonteCarlo(hist_array, hist_length, days_to_generate, time(nullptr)+k);
+    // Calculate calculateResults
+    obj->calculateResults();
     // add results to array
+
     for (int aa = 0; aa < days_to_generate; aa++){
-      results[k][aa] = obj.getResultAt(aa);
-    }
+      results[k][aa] = obj->getResultAt(aa);
+    } 
   }
 
   for (int i = 0; i < num_of_simulations; i++) {
@@ -64,6 +67,13 @@ int main() {
     }
     cout << endl;
   }
+  /*
+MonteCarlo obj = MonteCarlo(hist_array, hist_length, days_to_generate, time(nullptr));
+obj.calculateResults();
+for (int c = 0; c < days_to_generate; c++) {
+  cout << "day "<< c << ": "<< obj.getResultAt(c) << " . ";
+}
+*/
 
   /*
   string writeOutFile;

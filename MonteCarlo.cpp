@@ -21,19 +21,24 @@
 
   void MonteCarlo::calculatePeriodicDailyReturn() {
     sizeOfPDR = sizeOfHPD-1;
+
     periodic_daily_return = new double[sizeOfPDR];
-    for(int i = 1; i < sizeOfHPD; i++) {
+
+    for(int i = 1; i < sizeOfPDR; i++) {
       periodic_daily_return[i] = log(historical_price_data[i] / historical_price_data[i-1]);
     }
+
   }
 
   void MonteCarlo::calculateResults() {
+
     calculatePeriodicDailyReturn();
     calculateAverage();
     calculateVariance();
     calculateStandardDeviation();
     calculateDrift();
     calculateFuturePricing();
+
   }
 
   double MonteCarlo::getResultAt(int index) {
