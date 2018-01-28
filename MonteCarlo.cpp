@@ -27,21 +27,21 @@
     }
   }
 
-  double* MonteCarlo::getResults() {
+  void MonteCarlo::calculateResults() {
     calculatePeriodicDailyReturn();
     calculateAverage();
     calculateVariance();
     calculateStandardDeviation();
     calculateDrift();
     calculateFuturePricing();
+  }
 
-    return results;
+  double MonteCarlo::getResultAt(int index) {
+    return results[index];
   }
 
   void MonteCarlo::calculateDrift(){
-    //drift = average daily return - (variance ÷ 2)
     drift = average_daily_return - (variance/2.0);
-    std::cout << "ERAERAER drit " << drift << std::endl;
   }
   void MonteCarlo::calculateAverage() {
     double result = 0;

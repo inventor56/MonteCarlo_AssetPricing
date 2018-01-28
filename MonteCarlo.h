@@ -9,7 +9,8 @@ class MonteCarlo {
 public:
   MonteCarlo();
   MonteCarlo(double* historicalData, int lengthOfHD, int daysToGenerate, unsigned int seed_val);
-  double* getResults();
+  void calculateResults();
+  double getResultAt(int index);
 private:
   // User Inputted Variables
   double* historical_price_data; // The historical price data
