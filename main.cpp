@@ -19,14 +19,32 @@ int main() {
   int days_to_generate = 10;
   double * hist_array;
   double ** results;
+
+
   // Parse input from file
   string fileInput;
   vector<double> temp_storage;
   string val, trash;
 
-  cout << "Please enter the path name for your dataset file. (data sets can be downloaded from finance.yahoo.com/quote)" << endl;
+
+  // Welcome and days to generate
+  cout << "Welcome to the Asset Price Fluctuation Monte Carlo simulation"
+    << "Please enter the path name for your dataset file. (data sets can be downloaded from finance.yahoo.com/quote): "
+    << endl;
   cin >> fileInput;
   input_verifier();
+  // Get the number of days the user would like to generate
+  cout << "Please enter the number of days you will need future predictions for: " << endl;
+  cin >> days_to_generate;
+  input_verifier();
+  // Get the number of simulations the user would like to perform
+  cout << "Please enter the number of simulations you would like to run: " << endl;
+  cin >> num_of_simulations;
+  input_verifier();
+  // Get the option the user would like to perform for generations:
+  // 1. Serialized method
+  // 2. Parallel method on CUDA cores
+  // 3. Perform both and then compare results
 
   ifstream csvFile(fileInput);
   getline(csvFile, trash); // Skip first line
@@ -73,13 +91,15 @@ int main() {
     }
   }
 
+
+  /*
   for (int i = 0; i < num_of_simulations; i++) {
     cout << "Simulation " << i << ":";
     for (int c = 0; c < days_to_generate; c++) {
       cout << "day "<< c << ": "<< results[i][c] << " . ";
     }
     cout << endl;
-  }
+  } */
 
 
 
