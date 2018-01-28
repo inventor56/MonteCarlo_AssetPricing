@@ -22,11 +22,11 @@ private:
   double* results; // The results of your calculations
   double* periodic_daily_return;
   int sizeOfPDR; // Array length of PDR
-  double drift;
+  double drift; // Drift calculation
   double std_dev; // Standard deviation
   double average_daily_return; // Average across whoel series
-  double variance;
-  unsigned int seed;
+  double variance; // Variance calculation
+  unsigned int seed; // Seed value for RNG (in serial version)
   //Functions
   void calculatePeriodicDailyReturn(); // periodic daily return = ln (day's price ÷ previous day's price)
   void calculateDrift(); //drift = average daily return - (variance ÷ 2)

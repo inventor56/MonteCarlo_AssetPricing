@@ -30,16 +30,17 @@ int main() {
   int run_type = 2;
 
 
-  // Welcome and days to generate
-  cout << "Welcome to the Asset Price Fluctuation Monte Carlo simulation"
-    << "Please enter the path name for your dataset file. (data sets can be downloaded from finance.yahoo.com/quote): "
+  // Welcome output, recieve filename
+  cout << "Welcome to the Asset Price Fluctuation Monte Carlo simulation\n"
+    << "Please enter the path name for your dataset file. (data sets can be downloaded from finance.yahoo.com/quote)\n "
+    << "Some sample data sets are included in the DataSets folder.\n"
+    << "Type 'DataSets/DIS.csv' for instance, in order to use the Disney stock data set:"
     << endl;
   cin >> fileInput;
   input_verifier();
   // Get the option the user would like to perform for generations:
   // 1. Serialized method
   // 2. Parallel method on CUDA cores
-  // 3. Perform both and then compare results
   cout << "Please enter the type of execution:\n"
     << "1. Serialized method\n"
     << "2. Parallel method on CUDA cores\n"
@@ -47,13 +48,10 @@ int main() {
   cin >> run_type;
   input_verifier();
   // Get the number of days the user would like to generate
-  cout << "Please enter the number of days you will need future predictions for: " << endl;
+  cout << "Please enter the degree of accuracy (i.e. number of simulations and days to generate) for generated predictions: " << endl;
   cin >> days_to_generate;
   input_verifier();
-  // Get the number of simulations the user would like to perform
-  cout << "Please enter the number of simulations you would like to run: " << endl;
-  cin >> num_of_simulations;
-  input_verifier();
+  num_of_simulations = days_to_generate;
 
   //Quick Checks
   if (num_of_simulations > 10000) {  // If simulation size greater than what CUDA can handle
@@ -66,7 +64,6 @@ int main() {
   while (true) {
   	for (int b = 0; b < 5; b++) {// Set up specifically for Yahoo Finance data (as of the current version)
   		getline(csvFile, trash, ',');
-  		//cout << "These should be erased: " << val << endl;
   	}
   	if (csvFile.eof())
   		break;
@@ -112,7 +109,7 @@ int main() {
       << days_to_generate << " days took " << duration_serial << " ms." << endl;
   }
   ////////////////////////////////////////////
-  // Parallelized Version (CUDA Technology)
+  // Parallelized Version (CUDA Technology)!
   ////////////////////////////////////////////
 
   else if (run_type == 2){
@@ -123,7 +120,7 @@ int main() {
     auto end_time = std::chrono::high_resolution_clock::now(); // For keeping track of when the chrono clock ends
     std::chrono::duration<double, std::milli> duration = end_time - begin_time;
     double duration_cuda = duration.count();
-    cout << "Parallely computing " << num_of_simulations << " simulations, with results stretching out "
+    cout << "Parallelly computing " << num_of_simulations << " simulations, with results stretching out "
       << days_to_generate << " days took " << duration_cuda << " ms." << endl;
 
   }
@@ -138,7 +135,7 @@ int main() {
   cout << "Please enter in the name of the text file name you would like to save to" << endl;
   input_verifier(); // Verify input
 
-  // open file, generate data
+  // Open a file to write Excel readable data into
   cin >> writeOutFile;
   ofstream statsFile(writeOutFile);
   if(statsFile.is_open()){

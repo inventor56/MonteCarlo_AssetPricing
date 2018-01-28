@@ -25,13 +25,12 @@ double** cuda_run(double* histArr, int histLength, int daysToGenerate, int simul
   double drift_amt;
   double stdDv;
 
-  // Allocate memory for...
   // Random Numbers
   float* rand_normals; //= new float[n_size]
 
-
   // Array (one-dimensional) in which we will store our reuslts in intially, before converting
   double* initial_cuda_results;
+  // Allocate memory for... the above variables
   HANDLE_ERROR( cudaMallocManaged(&rand_normals, n_size * sizeof(float)));
   HANDLE_ERROR( cudaMallocManaged(&initial_cuda_results, n_size * sizeof(double)));
 
@@ -42,9 +41,9 @@ double** cuda_run(double* histArr, int histLength, int daysToGenerate, int simul
   }
 
 
-  // Calculate drift
+  // Calculate drift (as well as the standard deviation value)
   MonteCarlo* createDrift = new MonteCarlo(histArr, histLength, daysToGenerate, simulationsToRun);
-  createDrift->calculateResults(false); // cuda version, just calculateto get the drift
+  createDrift->calculateResults(false); // cuda version, just calculate to get the drift
   drift_amt = createDrift->getDrift();
   stdDv = createDrift->getStd();
 
