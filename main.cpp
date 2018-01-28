@@ -44,7 +44,7 @@ int main() {
   cout << "Please enter the type of execution:\n"
     << "1. Serialized method\n"
     << "2. Parallel method on CUDA cores\n"
-    << "3. Perform both and then compare runtime " << endl;
+    << endl;
   cin >> run_type;
   input_verifier();
   // Get the number of days the user would like to generate
