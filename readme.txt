@@ -2,6 +2,7 @@
 - To compile from the source code, be sure to compile with C++11 and CUDA
 	- nvcc main.cpp MonteCarlo.cpp -std=c++11
 	- nvcc main.cpp MonteCarlo.cpp kernel_cuda.cu -std=c++11
+	- nvcc main.cpp MonteCarlo.cpp kernel_cuda.cu -std=c++11 -lcurand
 	- Using C+11 support for NVCC as of CUDA version 7.0
 
 

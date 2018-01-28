@@ -26,7 +26,7 @@ int main() {
   string fileInput;
   vector<double> temp_storage;
   string val, trash;
-  int run_type = 1;
+  int run_type = 2;
 
 
   // Welcome and days to generate
@@ -111,7 +111,7 @@ int main() {
     results = cuda_run(hist_array, hist_length, days_to_generate, num_of_simulations);
   }
 
-
+  /*
 
   // Write out results to a filename
   // Write out with each row representing the simulation #
@@ -141,6 +141,7 @@ int main() {
   }
   else cout << "Unable to Open File" << endl;
 
+  */
 
   return 0;
 }
