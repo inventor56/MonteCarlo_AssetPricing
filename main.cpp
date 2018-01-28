@@ -125,35 +125,35 @@ int main() {
 
   }
 
+  // Offer to write data out, if results aren't too massive for Excel entry
+  if (num_of_simulations <= 100){
+    // Write out results to a filename
+    // Write out with each row representing the simulation #
+    // Write out with each column representing the day #
+    string writeOutFile;
+    cout << "Please enter in the name of the text file name you would like to save to" << endl;
+    input_verifier(); // Verify input
 
-
-  // Write out results to a filename
-  // Write out with each row representing the simulation #
-  // Write out with each column representing the day #
-  string writeOutFile;
-
-  cout << "Please enter in the name of the text file name you would like to save to" << endl;
-  input_verifier(); // Verify input
-
-  // Open a file to write Excel readable data into
-  cin >> writeOutFile;
-  ofstream statsFile(writeOutFile);
-  if(statsFile.is_open()){
-      statsFile << "\t";
-      for (int x = 1; x <= days_to_generate; x++) {
-        statsFile << "Day #" << x << "\t";
-      }
-      statsFile << "\n";
-      for(int h = 0; h < num_of_simulations; h++) {
-        statsFile << "Sim #" << h+1 << "\t";
-        for (int l = 0; l < days_to_generate; l++) {
-          statsFile << results[h][l] << "\t";
+    // Open a file to write Excel readable data into
+    cin >> writeOutFile;
+    ofstream statsFile(writeOutFile);
+    if(statsFile.is_open()){
+        statsFile << "\t";
+        for (int x = 1; x <= days_to_generate; x++) {
+          statsFile << "Day #" << x << "\t";
         }
         statsFile << "\n";
-      }
-      statsFile.close();
+        for(int h = 0; h < num_of_simulations; h++) {
+          statsFile << "Sim #" << h+1 << "\t";
+          for (int l = 0; l < days_to_generate; l++) {
+            statsFile << results[h][l] << "\t";
+          }
+          statsFile << "\n";
+        }
+        statsFile.close();
+    }
+    else cout << "Unable to Open File" << endl;
   }
-  else cout << "Unable to Open File" << endl;
 
   return 0;
 }
