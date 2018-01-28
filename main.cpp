@@ -111,7 +111,7 @@ int main() {
     results = cuda_run(hist_array, hist_length, days_to_generate, num_of_simulations);
   }
 
-  /*
+
 
   // Write out results to a filename
   // Write out with each row representing the simulation #
@@ -140,8 +140,6 @@ int main() {
       statsFile.close();
   }
   else cout << "Unable to Open File" << endl;
-
-  */
 
   return 0;
 }

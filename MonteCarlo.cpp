@@ -16,7 +16,6 @@
     sizeOfHPD = lengthOfHD;
     results = new double[total_days];
     seed = seed_val;
-    std::cout << seed_val << std::endl;
   }
 
   void MonteCarlo::calculatePeriodicDailyReturn() {
