@@ -57,7 +57,7 @@ int main() {
 
     for (int aa = 0; aa < days_to_generate; aa++){
       results[k][aa] = obj->getResultAt(aa);
-    } 
+    }
   }
 
   for (int i = 0; i < num_of_simulations; i++) {
@@ -67,41 +67,37 @@ int main() {
     }
     cout << endl;
   }
-  /*
-MonteCarlo obj = MonteCarlo(hist_array, hist_length, days_to_generate, time(nullptr));
-obj.calculateResults();
-for (int c = 0; c < days_to_generate; c++) {
-  cout << "day "<< c << ": "<< obj.getResultAt(c) << " . ";
-}
-*/
 
-  /*
+
+
+// Write out results to a filename
+// Write out with each row representing the simulation #
+// Write out with each column representing the day #
   string writeOutFile;
-  int iterations;
 
-  // Recieve user input
-  cout << "Please enter the max x number of x by x grids you'd like to generate"
-       << "(i.e x = 100, we'll generate 1x1, 2x2, 3x3, ..., 99x99, 100x100)" << endl;
-  cin >> iterations;
-  input_verifier(); // Verify input
   cout << "Please enter in the name of the text file name you would like to save to" << endl;
-  input_verifier(); // Verify input
+  //input_verifier(); // Verify input
 
   // open file, generate data
-  cin >> filename;
-  ofstream statsFile(filename);
+  cin >> writeOutFile;
+  ofstream statsFile(writeOutFile);
   if(statsFile.is_open()){
-      statsFile << "Data Size\tSpeedup\n";
-      for(int i = 1; i <= iterations; i++) {
-          rng_grid grid_i = rng_grid(threads, i, i); // threads and grid of size i X i
-          grid_i.test1(0);
-          grid_i.test3(0);
-          statsFile << i << "\t" << grid_i.computeSpeedup() << "\n";
+      statsFile << "\t";
+      for (int x = 1; x <= days_to_generate; x++) {
+        statsFile << "Day #" << x << "\t";
+      }
+      statsFile << "\n";
+      for(int h = 0; h < num_of_simulations; h++) {
+        statsFile << "Sim #" << h+1 << "\t";
+        for (int l = 0; l < days_to_generate; l++) {
+          statsFile << results[h][l] << "\t";
+        }
+        statsFile << "\n";
       }
       statsFile.close();
   }
   else cout << "Unable to Open File" << endl;
-  */
+
 
   return 0;
 }
