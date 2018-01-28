@@ -7,14 +7,15 @@
 #include "MonteCarlo.h"
 
 __global__ void kernel(double drift, double init_price, int days, float* normals, double* result) {
-  int index = blockIdx.x*days+blockIdx.y;
+  int index = blockIdx.x*gridDim.x;
   double currentPrice = init_price; // Get last value in price data to start with.
   for (int i = 0; i < days; i++) {
     result[index+i] = currentPrice*(exp(drift+normals[index+i]));
     currentPrice = result[index+i];
-    printf("Ok at Index %d, we have %f", index, currentPrice);
+    //printf("Ok at Index %d, we have %f", index, currentPrice);
   }
-
+  //printf("The block id is %d \n", blockIdx.x);
+  //printf("the grid dimesnions are %d \n", gridDim.x);
   //result[3] = init_price*(exp(drift+normals[4]));
 }
 
