@@ -1,6 +1,5 @@
 - MONTE CARLO SIMULATION UTILIZING MERSENNE TWISTER PRNG
-	- This program is intended to predict fluctuations in asset prices, utilizing random numbers as part of
-		the calculations.
+	- This program is intended to predict fluctuations in asset prices, utilizing random numbers as part of the calculations.
 		- Runs a full Monte Carlo simulation, for however many simulations the user desires
 	- At the end, if the number of simulations does not exceed 100, the user can export a document readable by Excel
 		- We restrict to under 100 due to how big the resulting file would be otherwise
