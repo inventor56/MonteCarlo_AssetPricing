@@ -5,6 +5,14 @@
 
 using namespace std;
 
+
+void input_verifier() {
+    if (cin.fail()) {
+        cout << "Invalid Input." << endl;
+        exit(1);
+    }
+}
+
 int main() {
   int num_of_simulations = 5;
   int hist_length = 0;
@@ -12,10 +20,15 @@ int main() {
   double * hist_array;
   double ** results;
   // Parse input from file
-
+  string fileInput;
   vector<double> temp_storage;
   string val, trash;
-  ifstream csvFile("DataSets/DIS.csv");
+
+  cout << "Please enter the path name for your dataset file. (data sets can be downloaded from finance.yahoo.com/quote)" << endl;
+  cin >> fileInput;
+  input_verifier();
+
+  ifstream csvFile(fileInput);
   getline(csvFile, trash); // Skip first line
   while (true) {
   	for (int b = 0; b < 5; b++) {// Set up specifically for Yahoo Finance data (as of the current version)
@@ -70,13 +83,13 @@ int main() {
 
 
 
-// Write out results to a filename
-// Write out with each row representing the simulation #
-// Write out with each column representing the day #
+  // Write out results to a filename
+  // Write out with each row representing the simulation #
+  // Write out with each column representing the day #
   string writeOutFile;
 
   cout << "Please enter in the name of the text file name you would like to save to" << endl;
-  //input_verifier(); // Verify input
+  input_verifier(); // Verify input
 
   // open file, generate data
   cin >> writeOutFile;
