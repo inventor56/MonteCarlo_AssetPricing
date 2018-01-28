@@ -73,6 +73,9 @@
   void MonteCarlo::calculateStandardDeviation() {
     std_dev = sqrt(variance);
   }
+  double MonteCarlo::getStd() {
+    return std_dev;
+  }
 
   void MonteCarlo::calculateFuturePricing() {
     std::default_random_engine generator(seed); // create generator with seed

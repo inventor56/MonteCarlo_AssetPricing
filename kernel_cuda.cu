@@ -6,18 +6,13 @@
 #include <stdio.h>
 #include "MonteCarlo.h"
 
-__global__ void kernel(double drift, double init_price, int days, float* normals, double* result) {
+__global__ void kernel(double drift, double init_price, double std_dev, int days, float* normals, double* result) {
   int index = blockIdx.x*gridDim.x;
   double currentPrice = init_price; // Get last value in price data to start with.
   for (int i = 0; i < days; i++) {
-    /*
-    result[index+i] = currentPrice*(exp(drift+normals[index+i]));
+    result[index+i] = currentPrice*(exp(drift+(std_dev*normals[index+i])));
     currentPrice = result[index+i];
-    */
-    result[index+i] = currentPrice+1;
-    currentPrice = result[index+i];
-    printf("Ok, our normals are at: %f \n", normals[index+i]);
-    //printf("Ok at Index %d, we have %f \n", index+i, currentPrice);
+
   }
   //printf("The block id is %d \n", blockIdx.x);
   //printf("Ok at Index %d", index);
@@ -28,6 +23,7 @@ __global__ void kernel(double drift, double init_price, int days, float* normals
 double** cuda_run(double* histArr, int histLength, int daysToGenerate, int simulationsToRun) {
   int n_size = daysToGenerate*simulationsToRun;
   double drift_amt;
+  double stdDv;
 
   // Allocate memory for...
   // Random Numbers
@@ -50,6 +46,7 @@ double** cuda_run(double* histArr, int histLength, int daysToGenerate, int simul
   MonteCarlo* createDrift = new MonteCarlo(histArr, histLength, daysToGenerate, simulationsToRun);
   createDrift->calculateResults(false); // cuda version, just calculateto get the drift
   drift_amt = createDrift->getDrift();
+  stdDv = createDrift->getStd();
 
   // Create all random numbers for the normal distribution, using currand parallelism
   curandGenerator_t curGen;
@@ -59,7 +56,7 @@ double** cuda_run(double* histArr, int histLength, int daysToGenerate, int simul
   curandDestroyGenerator(curGen);
 
   // Now we can run our parallel program
-  kernel<<<simulationsToRun,1>>>(drift_amt, histArr[histLength-1], daysToGenerate, rand_normals, initial_cuda_results);
+  kernel<<<simulationsToRun,1>>>(drift_amt, histArr[histLength-1], stdDv, daysToGenerate, rand_normals, initial_cuda_results);
 
   // Barrier to wait for computations to complete on the GPU before proceeding
   cudaDeviceSynchronize();
@@ -70,7 +67,6 @@ double** cuda_run(double* histArr, int histLength, int daysToGenerate, int simul
       cuda_results[g][k] = initial_cuda_results[(k*simulationsToRun)+g];
     }
   }
-
 
   // Free up memory on the GPU
   HANDLE_ERROR (cudaFree(rand_normals));

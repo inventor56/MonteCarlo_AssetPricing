@@ -12,6 +12,7 @@ public:
   void calculateResults(bool non_cuda);
   double getResultAt(int index);
   double getDrift();
+  double getStd();
 private:
   // User Inputted Variables
   double* historical_price_data; // The historical price data

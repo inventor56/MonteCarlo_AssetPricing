@@ -26,7 +26,7 @@ int main() {
   string fileInput;
   vector<double> temp_storage;
   string val, trash;
-  int run_type = 1;
+  int run_type = 2;
 
 
   // Welcome and days to generate
@@ -34,6 +34,16 @@ int main() {
     << "Please enter the path name for your dataset file. (data sets can be downloaded from finance.yahoo.com/quote): "
     << endl;
   cin >> fileInput;
+  input_verifier();
+  // Get the option the user would like to perform for generations:
+  // 1. Serialized method
+  // 2. Parallel method on CUDA cores
+  // 3. Perform both and then compare results
+  cout << "Please enter the type of execution:\n"
+    << "1. Serialized method\n"
+    << "2. Parallel method on CUDA cores\n"
+    << "3. Perform both and then compare runtime " << endl;
+  cin >> run_type;
   input_verifier();
   // Get the number of days the user would like to generate
   cout << "Please enter the number of days you will need future predictions for: " << endl;
@@ -43,10 +53,6 @@ int main() {
   cout << "Please enter the number of simulations you would like to run: " << endl;
   cin >> num_of_simulations;
   input_verifier();
-  // Get the option the user would like to perform for generations:
-  // 1. Serialized method
-  // 2. Parallel method on CUDA cores
-  // 3. Perform both and then compare results
 
   ifstream csvFile(fileInput);
   getline(csvFile, trash); // Skip first line
@@ -58,11 +64,9 @@ int main() {
   	if (csvFile.eof())
   		break;
   	getline(csvFile, val, ',');
-  	cout << "This is the val: " << val << endl;
   	temp_storage.push_back(stof(val));
   	hist_length++; // Increment total amount of historical data
   }
-  cout << "We have " << hist_length << " numbers" << endl;
   csvFile.close();
 
   // Convert vector to array (for now)
