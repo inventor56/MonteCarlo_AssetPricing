@@ -30,15 +30,14 @@
 
   }
 
-  void MonteCarlo::calculateResults() {
-
+  void MonteCarlo::calculateResults(bool non_cuda) {
     calculatePeriodicDailyReturn();
     calculateAverage();
     calculateVariance();
     calculateStandardDeviation();
     calculateDrift();
-    calculateFuturePricing();
-
+    if (non_cuda)
+      calculateFuturePricing();
   }
 
   double MonteCarlo::getResultAt(int index) {
@@ -47,6 +46,9 @@
 
   void MonteCarlo::calculateDrift(){
     drift = average_daily_return - (variance/2.0);
+  }
+  double MonteCarlo::getDrift() {
+    return drift;
   }
   void MonteCarlo::calculateAverage() {
     double result = 0;
